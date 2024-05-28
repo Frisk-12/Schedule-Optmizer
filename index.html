@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2299.77">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;title&gt;Work Schedule Optimizer&lt;/title&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;h1&gt;Work Schedule Optimizer&lt;/h1&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;form id="inputForm"&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;label for="employees"&gt;Employees (comma separated):&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;input type="text" id="employees" name="employees"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;label for="absences"&gt;Absences (JSON format):&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;textarea id="absences" name="absences"&gt;&lt;/textarea&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;label for="preferences"&gt;Preferences (JSON format):&lt;/label&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;textarea id="preferences" name="preferences"&gt;&lt;/textarea&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>&lt;button type="submit"&gt;Solve&lt;/button&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/form&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;div id="results"&gt;&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;script&gt;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>document.getElementById('inputForm').addEventListener('submit', function(event) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>event.preventDefault();</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let employees = document.getElementById('employees').value.split(',');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let absences = JSON.parse(document.getElementById('absences').value);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>let preferences = JSON.parse(document.getElementById('preferences').value);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>fetch('/solve', {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>method: 'POST',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>headers: {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>'Content-Type': 'application/json',</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>body: JSON.stringify({</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>employees: employees,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>absences: absences,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                    </span>preferences: preferences</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>}),</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>})</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>.then(response =&gt; response.json())</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>.then(data =&gt; {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>let resultsDiv = document.getElementById('results');</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">                </span>resultsDiv.innerHTML = JSON.stringify(data, null, 2);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>})</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">            </span>.catch(error =&gt; console.error('Error:', error));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">        </span>});</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
